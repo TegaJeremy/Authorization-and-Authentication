@@ -5,6 +5,7 @@ const userModel = require ('../model/authmodel')
 const authentication =  async (req,res,next)=>{
    try {
     const user = await userModel.findById(req.params.id)
+    console.log(user)
     const usertoken = user.token
     if(!usertoken){
         res.status(400).json("token not find")
