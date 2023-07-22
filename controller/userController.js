@@ -101,6 +101,7 @@ const userLogin = async (req, res) => {
     }
 };
 
+
 const getall = async (req,res)=>{
  try {
     const getall = await user.find()
@@ -115,6 +116,7 @@ const getall = async (req,res)=>{
  }
 
 }
+
 
 
    const getone = async (req,res)=>{
@@ -146,6 +148,21 @@ const updateAdmin = async (req,res)=>{
         res.status(500).json(error.message)
     }
 }
+const updateSuperAdmin = async (req,res)=>{
+    try {
+        const id = req.params.id
+        const change = await user.findByIdAndUpdate(id, {isSuperAdmin:true})
+        if (true) {
+             res.status(200).json({data:change})
+        } else {
+            res.json("error")
+        }
+        
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+}
+
 
 const updateUser=async(req,res)=>{
     try {
@@ -181,6 +198,7 @@ module.exports = {
   getone,
   getall,
   updateAdmin,
+  updateSuperAdmin,
   updateUser,
   deleteUser
 }

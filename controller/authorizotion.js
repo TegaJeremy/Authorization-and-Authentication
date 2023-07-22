@@ -35,5 +35,18 @@ const checkUser = (req,res,next,)=>{
         )
     })
 }
+const checkSuperUser = (req,res,next,)=>{
+    authentication(req,res, async ()=>{
+        const user =  await userModel.findById(req.params.id)
+        if(user.isSuperAdmin){
+            next()
+        } else(
+            res.json("you are not authorise to perform this action")
+        )
+    })
+}
 
-module.exports = checkUser
+module.exports = {
+    checkUser,
+    checkSuperUser
+}
