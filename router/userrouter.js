@@ -1,19 +1,23 @@
 const express = require('express')
 
-const {newUser, userLogin, getone, updateAdmin, getall, updateUser, deleteUser} = require('../controller/userController')
-const checkUser = require('../controller/authorizotion')
+const { register, verifyEmail, resendVerificationEmail, login,logout }= require('../controller/registrationController.')
+const { forgotPassword, changePassword, resetPassword }= require('../controller/passwordController')
 const router = express.Router()
-router.route("/").get((req,res)=>{
-    res.json("welcome to my authentication api homepage")
-})
 
-router.route("/signup").post(newUser)
-router.route("/signin").post(userLogin)
-router.route("/:id/getone/:userid").get(checkUser,getone)
-router.route("/:id/getall").get(checkUser,getall)
-router.route("/updateAdmin/:id").put(updateAdmin)
-router.route("/:id/update/:userid").put(checkUser,updateUser)
-router.route("/:id/delete/:userid").delete(checkUser,deleteUser)
+// route for Registration and email verification
+router.route("/registration").post(register)
+router.route("/verifyemail/:token").post(verifyEmail)
+router.route("/resendverificationemail").post(resendVerificationEmail)
+
+// login and logout route
+router.route("/login").post(login)
+router.route("/logout").post(logout)
+
+// password reset and change and forgot
+router.route("/forgotpassword").post(forgotPassword)
+router.route("/changepassword/:token").post(changePassword)
+router.route("/g/:token").post(resetPassword)
+
 
 
 module.exports = router
